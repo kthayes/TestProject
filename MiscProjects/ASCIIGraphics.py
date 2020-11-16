@@ -24,6 +24,7 @@ VALUES = {
 
 def generate(input_lines):
     ''' Write your code here '''
+    text = ""
     input_lines = [line[:-1] for line in input_lines]
 
     # repeat for all lines
@@ -65,8 +66,9 @@ def generate(input_lines):
     ''' ret will be the output value. Do not print in this function '''
     return ret
 
-def test():
-    fname = input("Enter filename: ")
+def ASCIIGraphics():
+    fname = "ASCIIGraphics_InputFiles/"
+    fname += input("Enter filename: ")
     print("")
     try:
         f = open(fname, "r")
@@ -83,4 +85,4 @@ def test():
 
     print(output.strip())
 
-test()
+ASCIIGraphics()

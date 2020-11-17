@@ -22,11 +22,62 @@ VALUES = {
     "9": "xxxxxx...xx...xxxxxx....x....xxxxxx",
 }
 
+''' input_lines is a list of lines from the readlines() file function '''
 def generate(input_lines):
     ''' Write your code here '''
+    # Remove newline characters (\n)
+    for i in range(len(input_lines)):
+        input_lines[i] = input_lines[i].strip()
+    
+    # Determine both numbers to be summed, based on the input_lines list
+    text = ""
+    for char in range(0, len(input_lines[0]), 5):
+        currVal = ""
+        for row in range(len(input_lines)):
+            for col in range(char, char + 5):
+                currVal += input_lines[row][col]
+        # Dictionary lookup
+        currVal = str(VALUES.get(currVal))
+        # Build text, accounting for -1 as '+'
+        if(currVal == "-1"):
+            text += "+"
+        else:
+            text += currVal
+    
+    # Calculate the sum
+    text = text.split("+")
+    result = str(int(text[0]) + int(text[1]))
+    
+    """
+    ret = ""
+    for num in range(len(result)):
+        charVal = VALUES.get(result[num])
+        #print(charVal)
+        for row in range(7):
+            for val in range(len(charVal)):
+                ret += charVal[val][row*5:row*5+5]
+        ret += "\n"
+    """
+    
+    
+    # Extract each number in the result into a list
+    retList = list()
+    for num in result:
+        retList.append(VALUES.get(num))
+    
+    # Convert the sum to ASCII, as a returnable string
+    ret = ""
+    for row in range(7):
+        for val in range(len(retList)):
+            ret += retList[val][row*5:row*5+5]
+        ret += "\n"
+    
+    return ret
+    
+    """
     text = ""
     input_lines = [line[:-1] for line in input_lines]
-
+    
     # repeat for all lines
     for i in range(0, len(input_lines[0]), 6):
         single_number = ""
@@ -60,11 +111,7 @@ def generate(input_lines):
     for line in ret:
         return_value += line[0:-1] + "\n"
     return return_value
-
-    ''' input_lines is a list of lines from the readlines() file function '''
-    ret = ""
-    ''' ret will be the output value. Do not print in this function '''
-    return ret
+    """
 
 def ASCIIGraphics():
     fname = "ASCIIGraphics_InputFiles/"
@@ -84,5 +131,6 @@ def ASCIIGraphics():
     output = generate(lines)
 
     print(output.strip())
+    #print(len(lines[0].strip()))
 
 ASCIIGraphics()

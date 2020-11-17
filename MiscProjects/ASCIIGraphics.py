@@ -23,11 +23,9 @@ VALUES = {
 }
 
 ''' input_lines is a list of lines from the readlines() file function '''
-def generate(input_lines):
-    ''' Write your code here '''
+def completedGenerate(input_lines):
     # Remove newline characters (\n)
-    for i in range(len(input_lines)):
-        input_lines[i] = input_lines[i].strip()
+    input_lines = [line.strip() for line in input_lines]
     
     # Determine both numbers to be summed, based on the input_lines list
     text = ""
@@ -43,43 +41,33 @@ def generate(input_lines):
             text += "+"
         else:
             text += currVal
-    
+            
     # Calculate the sum
-    text = text.split("+")
-    result = str(int(text[0]) + int(text[1]))
-    
-    """
-    ret = ""
-    for num in range(len(result)):
-        charVal = VALUES.get(result[num])
-        #print(charVal)
-        for row in range(7):
-            for val in range(len(charVal)):
-                ret += charVal[val][row*5:row*5+5]
-        ret += "\n"
-    """
-    
+    textList = text.split("+")
+    result = str(int(textList[0]) + int(textList[1]))
     
     # Extract each number in the result into a list
     retList = list()
-    for num in result:
-        retList.append(VALUES.get(num))
+    [retList.append(VALUES.get(num)) for num in result]
     
     # Convert the sum to ASCII, as a returnable string
     ret = ""
     for row in range(7):
         for val in range(len(retList)):
-            ret += retList[val][row*5:row*5+5]
+            ret += retList[val][row*5:row*5+5]# + "."
+        #ret = ret[:-1] + "\n"
         ret += "\n"
     
     return ret
-    
-    """
-    text = ""
-    input_lines = [line[:-1] for line in input_lines]
+
+def givenGenerate(input_lines):
+    #input_lines = [line[:-1] for line in input_lines]        Attempts to pull the newline characters off the end of each line, but does not account for the last line, which does not have a newline character
+    input_lines = [line.strip() for line in input_lines]
     
     # repeat for all lines
-    for i in range(0, len(input_lines[0]), 6):
+    text = ""
+    #for i in range(0, len(input_lines[0]), 6):               Index out of bounds issue, 6 jumps too far ahead each iteration
+    for i in range(0, len(input_lines[0]), 5):
         single_number = ""
         for k in range(7):
             for j in range(5):
@@ -111,7 +99,6 @@ def generate(input_lines):
     for line in ret:
         return_value += line[0:-1] + "\n"
     return return_value
-    """
 
 def ASCIIGraphics():
     fname = "ASCIIGraphics_InputFiles/"
@@ -128,9 +115,11 @@ def ASCIIGraphics():
     if len(lines) != 7:
         print("Lines is {}, not 7.".format(len(lines)))
 
-    output = generate(lines)
+    output = completedGenerate(lines)
+    #output2 = givenGenerate(lines)
 
     print(output.strip())
-    #print(len(lines[0].strip()))
+    #print()
+    #print(output2.strip())
 
 ASCIIGraphics()

@@ -5,6 +5,7 @@ VOWELS = {"a", "e", "i", "o", "u", "y"}
 def translate(line):
     tr = ""
     # Make a list of each word in the line
+    line = line.strip()
     words = line.split()
     # Step through each word in the list
     for word in words:
@@ -17,7 +18,7 @@ def translate(line):
             for letter in word:
                 # If the current letter is a consonant, remove it from the front of the word, and place it at the end of the word
                 if(letter not in VOWELS):
-                    word = word[1:] + letter
+                    word = word[1:] + word[0]
                 # If we hit a vowel, we are done moving consonants
                 else:
                     break
@@ -31,7 +32,7 @@ def translate(line):
 # "main" function, called at the bottom
 def PigLatin():
     # Change fName to match the file name to be inputed
-    fName = "lines.txt"
+    fName = "same.txt"
     fDir = "PigLatin_InputFiles/"
     fDir += fName
     
@@ -48,6 +49,6 @@ def PigLatin():
     
     # Call translate() function for each line in the list, and print the result
     for line in lines:
-        print(translate(line.strip()))
+        print(translate(line))
         
 PigLatin()
